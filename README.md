@@ -10,4 +10,4 @@ Required packages
 * Python 2.x
 * Numpy
 * PyVISA
-* Matplolib
+* Matplotlib
