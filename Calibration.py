@@ -100,4 +100,3 @@ fnamez = 'Calibration_%s.npz' %nom_test
 savez(fnamez,Calibration=Calibration)        
       
 gene.arret() 
-
