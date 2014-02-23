@@ -154,14 +154,3 @@ for l in range (0,Pol):
         savetxt(fname,Measurement[l,k,:])               
 
 savez('Bin_Results.npz',Measurement=Measurement,Raw_Traces=Raw_Traces)
-
- 
-
-
-
-
-
-   
-    
-
-
