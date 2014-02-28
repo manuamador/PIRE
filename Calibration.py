@@ -16,11 +16,11 @@ import visa
 import Spectrum
 import SignalGenerator
 
-nom_test = raw_input('Enter the name of the calibration?')   
-if os.path.isdir('Calibration_'+nom_test)==False:            #verify if the folder exists
-   os.mkdir('Calibration_'+nom_test)						#create the folder
+test_name = raw_input('Enter the name of the calibration?')   
+if os.path.isdir('Calibration_'+test_name)==False:            #verify if the folder exists
+   os.mkdir('Calibration_'+test_name)						#create the folder
     
-os.chdir('Calibration_'+nom_test)
+os.chdir('Calibration_'+test_name)
 
 
 ###############################################
@@ -53,11 +53,9 @@ print '__________________________\nInstruments initializations\n'
 print '\nSpectrum analyzer:'
 Spectre=Spectrum.FSV30()
 Spectre.reset()
-#Spectre.startFreq(fstart)    #Réglage de la fréquence de départ
-#Spectre.stopFreq(fstop)      #Réglage de la fréquence de fin
-Spectre.RBW(RBW)             #Réglage du RBW
-Spectre.SweepPoint(SwpPt)    #Réglage du nombre de pts
-Spectre.UnitDBM()            #Réglage en de l'unité en dBm
+Spectre.RBW(RBW)
+Spectre.SweepPoint(SwpPt)    
+Spectre.UnitDBM()            
 Spectre.SPAN(fspan)
 Spectre.centerFreq(fcenter)
 
@@ -65,7 +63,7 @@ Spectre.centerFreq(fcenter)
 print '\nSignalGenerator:'
 gene=SignalGenerator.RS_SMF100A()
 gene.reset()
-gene.arret() #RF OFF
+gene.off() #RF OFF
 gene.setPower(P_gene)
 gene.setFreq(fcenter)
 
@@ -77,7 +75,7 @@ print '________________________________\nCalibration of the fully anechoic room\
 Calibration=empty([Pol,len(f),2])
 
 for l in range (0,Pol):
-	SyntheseCal=empty([0,2])  
+    SyntheseCal=empty([0,2])  
     if l==0:
         raw_input ('\nVertical polarization, press Enter to continue')
         Polarization='V'     
@@ -86,17 +84,18 @@ for l in range (0,Pol):
         Polarization='H'
     for i in range(0,len(f)):
         gene.setFreq(f[i])
-        gene.marche()
-        time.sleep(0.1)       
+        gene.on()
+        time.sleep(0.05)       
         Niveau = Spectre.getTrace(SwpPt)
         MarkerValue=Spectre.MarkerMax(f[i])
         Correction=(0+G_ant_inter_db[i,1]-float(MarkerValue))
         SyntheseCal=vstack([SyntheseCal,array([f[i],Correction])])
         Calibration[l,i,:]=array([f[i],Correction])
-        print ("f=2.3%f MHz, C=%2.2f dB") %(f[i]/1e6,Correction)
+        print ("f=%2.5f MHz, C=%2.2f dB") %(f[i]/1e6,Correction)
     fname = ('SynthCal_Pol_%s.txt')  %(Polarization) 
     savetxt(fname,SyntheseCal[0:,:])
-fnamez = 'Calibration_%s.npz' %nom_test
-savez(fnamez,Calibration=Calibration)        
+    savetxt("../"+fname,SyntheseCal[0:,:])
+fnamez = 'Calibration_%s.npz' %test_name
+savez(fnamez,Calibration=Calibration,f=f)        
       
-gene.arret() 
+gene.off() 

@@ -20,11 +20,11 @@ class RS_SMF100A():
         print 'OK'
         return True
     
-    def arret(self):
+    def off(self):
         """ RF OFF """
         return self.ctrl.write("*CLS;OUTP1 OFF")
     
-    def marche(self):
+    def on(self):
         """ RF ON """
         return self.ctrl.write("*CLS;OUTP1 ON")
     
