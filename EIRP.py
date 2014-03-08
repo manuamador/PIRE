@@ -59,9 +59,10 @@ Tmes=0.05     #dwell time
 ##n=13 #number of channels
 ##fc=linspace(f0,fn,n)
 ###channel center frequencies indexes
-##peaksindx=zeros(len(fc))
+##peaksindx=zeros(len(fc),dtype=int)
 ##for i in range(len(fc)):
-#    peaksindx[i]=argmin(abs(f-fc[i]))
+##    a=int(argmin(abs(f-fc[i])))
+##    peaksindx[i]=a
 
 
 Level_criterion=-35
@@ -115,7 +116,7 @@ for l in range (0,Pol):
             #criterion automatic stop
             #while (min(cLevel[peaksindx])<Level_criterion): #every channel
             #while (min(cLevel[peaksindx])<Level_criterion): #one channel
-            #while (mean(cLevel[peaksindx]<Level_criterion))<p/n: #p channels among n
+            #while mean(Level[peaksindx]>Level_criterion)<p/n: #p channels among n
             #	Level = Spectre.getTrace(SwpPt)    
             #	if Polarization=='V':
             #    	cLevel=Level+Correction_V[:,1]
@@ -127,7 +128,7 @@ for l in range (0,Pol):
             MaxIdx =cLevel.argmax()             
             Measurement[l,k,j,:]=array([f[MaxIdx],MaxLevel])
             Raw_Traces[l,k,j,:]=Trace
-            print ' %s deg Max EIRP = %2.2f mW/MHz' %((Angles [j]),10**(Measurement[l,k,j,1]/10))
+            print ' %s deg Max EIRP = %2.2f mW/MHz' %((Angles [j]),10**(MaxLevel/10))
         print ("\n\nBack to 0 deg.")
         TTable.setPosition(0)
             
