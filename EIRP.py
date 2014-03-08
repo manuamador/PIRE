@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Apr 16 15:15:55 2013
-
-@author: J89950
+This program measures the equivalent isotropic radiated power of an equipment under test (maximal spectral density to be precise) 
+3 cutting planes, 2 polarizations
 """
 
 from __future__ import division
