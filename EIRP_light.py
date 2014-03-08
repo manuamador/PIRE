@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Apr 16 15:15:55 2013
-
-@author: J89950
+This program measures the equivalent isotropic radiated power of an equipment under test (maximal spectral density to be precise) 
+If the polarization of the EUT is known without any doubt (e.g the EUT has an external linear antenna) one polarization (along the antenna) can be enough.
+3 cutting planes, 1 polarization 
 """
 
 from __future__ import division
