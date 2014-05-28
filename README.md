@@ -11,3 +11,9 @@ Required packages
 * Numpy
 * PyVISA
 * Matplotlib
+
+Usage
+-----
+
+Run `Calibration.py`
+Run `EIRP.py`
